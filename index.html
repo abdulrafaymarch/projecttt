@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoLux - Premium Automobiles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --gold: #FFD700;
+            --dark-gold: #DAA520;
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --gray: #1A1A1A;
+            --light-gray: #2A2A2A;
+            --accent: #FF6B6B;
+        }
+
+        /* ===== GLOBAL STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 50px;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+            color: var(--gold);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--dark-gold));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cta-button {
+            padding: 10px 25px;
+            background: linear-gradient(45deg, var(--gold), var(--dark-gold));
+            color: var(--black);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .search-icon {
+            color: var(--white);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-icon:hover {
+            color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--gold);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 50px;
+            background: rgba(10, 10, 10, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--gold), var(--dark-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px var(--gold); }
+            to { text-shadow: 0 0 20px var(--gold), 0 0 30px var(--dark-gold); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== CAROUSEL STYLES ===== */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            animation: scrollLeft 20s linear infinite;
+            width: calc(200px * 8);
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .carousel-item {
+            flex: 0 0 200px;
+            height: 150px;
+            margin-right: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== CATEGORY SHOWCASE ===== */
+        .category-showcase {
+            padding: 100px 0;
+            background: var(--gray);
+        }
+
+        .category-showcase h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--gold);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            border-color: var(--gold);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .category-card p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .category-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .category-link:hover {
+            color: var(--dark-gold);
+        }
+
+        .category-link i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-link:hover i {
+            transform: translateX(5px);
+        }
+
+        /* ===== VEHICLE COLLECTION ===== */
+        .featured-vehicles {
+            padding: 100px 0;
+        }
+
+        .featured-vehicles h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--gold);
+        }
+
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .vehicle-card {
+            background: var(--gray);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .vehicle-image {
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .vehicle-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .vehicle-card:hover .vehicle-image img {
+            transform: scale(1.1);
+        }
+
+        .vehicle-info {
+            padding: 25px;
+        }
+
+        .vehicle-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--gold);
+        }
+
+        .vehicle-info p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .vehicle-specs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .vehicle-specs span {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .vehicle-specs i {
+            margin-right: 5px;
+        }
+
+        /* ===== MODAL STYLES ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 10px;
+            position: relative;
+            animation: modalFadeIn 0.5s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #e74c3c;
+        }
+        
+        .vehicle-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .vehicle-detail-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .vehicle-detail-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .vehicle-detail-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .vehicle-detail-info h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 28px;
+        }
+        
+        .vehicle-detail-info p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .vehicle-specs-detail {
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .vehicle-specs-detail h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 20px;
+            display: block;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+        
+        .spec-item i {
+            color: #3498db;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .spec-item span {
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .vehicle-features {
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .vehicle-features h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 20px;
+            display: block;
+        }
+        
+        .features-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .features-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .features-list li i {
+            color: #2ecc71;
+            flex-shrink: 0;
+        }
+        
+        .vehicle-price {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .price-tag {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        
+        .detail-cta {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .detail-cta .cta-button {
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .detail-cta .cta-button.primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .detail-cta .cta-button.primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .detail-cta .cta-button.secondary {
+            background-color: transparent;
+            color: #3498db;
+            border: 2px solid #3498db;
+        }
+        
+        .detail-cta .cta-button.secondary:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--gray);
+            padding: 70px 0 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-section h4 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--gold);
+        }
+
+        .footer-section ul li i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 15px 30px;
+            }
+            
+            .nav-menu {
+                gap: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 50px;
+                transition: left 0.5s ease;
+                gap: 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                width: 100%;
+                text-align: center;
+                padding: 15px 0;
+            }
+            
+            .nav-link {
+                font-size: 1.2rem;
+            }
+            
+            .nav-cta {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-grid,
+            .vehicle-grid,
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Carousel adjustments for tablets */
+            .carousel-item {
+                flex: 0 0 150px;
+                height: 120px;
+                margin-right: 15px;
+            }
+
+            .carousel-track {
+                width: calc(150px * 8 + 15px * 7);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 0.9rem;
+            }
+            
+            /* Carousel adjustments for mobile phones */
+            .carousel-item {
+                flex: 0 0 120px;
+                height: 90px;
+                margin-right: 10px;
+            }
+
+            .carousel-track {
+                width: calc(120px * 8 + 10px * 7);
+            }
+            
+            .vehicle-detail {
+                flex-direction: column;
+            }
+            
+            .vehicle-detail-image,
+            .vehicle-detail-info {
+                min-width: 100%;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .detail-cta {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-car-side"></i>
+                AutoLux
+            </a>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="services.html" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            
+            <div class="nav-cta">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <a href="#" class="cta-button">Test Drive</a>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1> Automobile</h1>
+            <h1> Experience</h1>
+            <p>Discover our collection of luxury vehicles</p>
+            
+            <!-- Carousel -->
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="carousel-item">
+                        <img src="asstes/bmw.jpg" alt="BMW 7 Series">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="asstes/Mercedes-Benz GLE Premium SUV.jpg" alt="Mercedes-Benz GLE">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="asstes/Luxury Sedan bmw.jpg" alt="BMW 5 Series">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="asstes/Audi Q7.jpg" alt="Audi Q7">
+                    </div>
+                    <!-- Duplicate items for seamless loop -->
+                    <div class="carousel-item">
+                        <img src="asstes/bmw.jpg" alt="BMW 7 Series">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="asstes/Mercedes-Benz GLE Premium SUV.jpg" alt="Mercedes-Benz GLE">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="asstes/Luxury Sedan bmw.jpg" alt="BMW 5 Series">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="asstes/Audi Q7.jpg" alt="Audi Q7">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="sedans.html" class="cta-button">Explore Sedans</a>
+                <a href="electric.html" class="cta-button secondary">Electric Future</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Showcase Section -->
+    <section class="category-showcase">
+        <div class="container">
+            <h2>Our Vehicle Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Sedans</h3>
+                    <p>Luxury and comfort for everyday journeys</p>
+                    <a href="sedans.html" class="category-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>SUVs</h3>
+                    <p>Power and versatility for any adventure</p>
+                    <a href="suvs.html" class="category-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-flag-checkered"></i>
+                    </div>
+                    <h3>Sports Cars</h3>
+                    <p>Performance and speed for the thrill-seekers</p>
+                    <a href="sports.html" class="category-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-charging-station"></i>
+                    </div>
+                    <h3>Electric</h3>
+                    <p>Sustainable innovation for the future</p>
+                    <a href="electric.html" class="category-link">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Vehicles Section -->
+    <section class="featured-vehicles">
+        <div class="container">
+            <h2>Featured Vehicles</h2>
+            <div class="vehicle-grid">
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="asstes/bmw.jpg" alt="BMW 7 Series">
+                    </div>
+                    <div class="vehicle-info">
+                        <h3>BMW 7 Series</h3>
+                        <p>Experience ultimate comfort and sophistication</p>
+                        <div class="vehicle-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 523 HP</span>
+                            <span><i class="fas fa-gas-pump"></i> 25 MPG</span>
+                        </div>
+                        <a href="#" class="cta-button view-details" data-vehicle="luxury-sedan">View Details</a>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="asstes/Mercedes-Benz GLE Premium SUV.jpg" alt="Mercedes-Benz GLE">
+                    </div>
+                    <div class="vehicle-info">
+                        <h3>Mercedes-Benz GLE</h3>
+                        <p>Conquer any terrain with style and power</p>
+                        <div class="vehicle-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 362 HP</span>
+                            <span><i class="fas fa-gas-pump"></i> 22 MPG</span>
+                        </div>
+                        <a href="#" class="cta-button view-details" data-vehicle="premium-suv">View Details</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vehicle-grid">
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="asstes/Luxury Sedan bmw.jpg" alt="BMW 5 Series">
+                    </div>
+                    <div class="vehicle-info">
+                        <h3>BMW 5 Series</h3>
+                        <p>Business class performance and elegance</p>
+                        <div class="vehicle-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 335 HP</span>
+                            <span><i class="fas fa-gas-pump"></i> 30 MPG</span>
+                        </div>
+                        <a href="#" class="cta-button view-details" data-vehicle="bmw-5-series">View Details</a>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="asstes/Audi Q7.jpg" alt="Audi Q7">
+                    </div>
+                    <div class="vehicle-info">
+                        <h3>Audi Q7</h3>
+                        <p>Premium SUV with cutting-edge technology</p>
+                        <div class="vehicle-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 335 HP</span>
+                            <span><i class="fas fa-gas-pump"></i> 21 MPG</span>
+                        </div>
+                        <a href="#" class="cta-button view-details" data-vehicle="audi-q7">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicle Details Modal -->
+    <div id="vehicleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="vehicleDetails" class="vehicle-detail">
+                <!-- Vehicle details will be inserted here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AutoLux</h4>
+                    <p>Premium automobiles for the discerning driver</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Vehicle Categories</h4>
+                    <ul>
+                        <li><a href="sedans.html">Sedans</a></li>
+                        <li><a href="suvs.html">SUVs</a></li>
+                        <li><a href="sports.html">Sports Cars</a></li>
+                        <li><a href="electric.html">Electric</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Auto Street, Car City</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@autolux.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AutoLux. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Vehicle data
+        const vehicleData = {
+            'luxury-sedan': {
+                name: 'BMW 7 Series Luxury Sedan',
+                image: 'asstes/bmw.jpg',
+                description: 'The BMW 7 Series sets the benchmark for luxury sedans with its exceptional comfort, cutting-edge technology, and refined driving dynamics. Designed for executives and discerning drivers who demand the best in automotive luxury.',
+                specs: {
+                    'Engine': '4.4L V8 Twin Turbo',
+                    'Horsepower': '523 HP',
+                    'Torque': '553 lb-ft',
+                    'Acceleration': '0-60 mph in 4.3 seconds',
+                    'Top Speed': '155 mph',
+                    'Fuel Economy': '25 MPG combined',
+                    'Transmission': '8-Speed Automatic',
+                    'Drive Type': 'Rear-Wheel Drive'
+                },
+                features: [
+                    'Executive Lounge Seating',
+                    'Gesture Control',
+                    'Head-Up Display',
+                    'Ambient Lighting',
+                    'Panoramic Sunroof',
+                    'Premium Sound System',
+                    'Wireless Charging',
+                    'Advanced Driver Assistance',
+                    'Night Vision',
+                    'Parking Assistant Plus'
+                ],
+                price: '$86,800'
+            },
+            'premium-suv': {
+                name: 'Mercedes-Benz GLE Premium SUV',
+                image: 'asstes/Mercedes-Benz GLE Premium SUV.jpg',
+                description: 'The Mercedes-Benz GLE combines the versatility of an SUV with the refinement of a luxury sedan. With its powerful performance, advanced technology, and spacious interior, it\'s perfect for both urban commutes and off-road adventures.',
+                specs: {
+                    'Engine': '3.0L Inline-6 Turbo',
+                    'Horsepower': '362 HP',
+                    'Torque': '369 lb-ft',
+                    'Acceleration': '0-60 mph in 5.5 seconds',
+                    'Top Speed': '130 mph',
+                    'Fuel Economy': '22 MPG combined',
+                    'Transmission': '9-Speed Automatic',
+                    'Drive Type': '4MATIC All-Wheel Drive'
+                },
+                features: [
+                    'AIRMATIC Air Suspension',
+                    'MBUX Infotainment System',
+                    'Burmester Surround Sound',
+                    '64-Color Ambient Lighting',
+                    'Heated and Ventilated Seats',
+                    'Panoramic Sunroof',
+                    'Wireless Charging',
+                    'Active Brake Assist',
+                    'Blind Spot Assist',
+                    'Off-Road Driving Mode'
+                ],
+                price: '$54,750'
+            },
+            'bmw-5-series': {
+                name: 'BMW 5 Series',
+                image: 'asstes/Luxury Sedan bmw.jpg',
+                description: 'The BMW 5 Series perfectly balances business-class elegance with thrilling performance. Its sophisticated design and advanced technology make it the ideal choice for professionals who appreciate driving dynamics.',
+                specs: {
+                    'Engine': '3.0L Inline-6 Turbo',
+                    'Horsepower': '335 HP',
+                    'Torque': '330 lb-ft',
+                    'Acceleration': '0-60 mph in 4.9 seconds',
+                    'Top Speed': '155 mph',
+                    'Fuel Economy': '30 MPG combined',
+                    'Transmission': '8-Speed Automatic',
+                    'Drive Type': 'Rear-Wheel Drive'
+                },
+                features: [
+                    'Live Cockpit Professional',
+                    'Gesture Control',
+                    'Head-Up Display',
+                    'Ambient Lighting',
+                    'Moonroof',
+                    'Harman Kardon Sound System',
+                    'Wireless Charging',
+                    'Driving Assistant Professional',
+                    'Remote Engine Start',
+                    'Parking Assistant'
+                ],
+                price: '$54,200'
+            },
+            'audi-q7': {
+                name: 'Audi Q7',
+                image: 'asstes/Audi Q7.jpg',
+                description: 'The Audi Q7 represents the pinnacle of luxury SUV engineering, combining sophisticated design with advanced technology and exceptional performance. Its spacious interior and innovative features make every journey a first-class experience.',
+                specs: {
+                    'Engine': '3.0L V6 Turbo',
+                    'Horsepower': '335 HP',
+                    'Torque': '369 lb-ft',
+                    'Acceleration': '0-60 mph in 5.5 seconds',
+                    'Top Speed': '130 mph',
+                    'Fuel Economy': '21 MPG combined',
+                    'Transmission': '8-Speed Automatic',
+                    'Drive Type': 'quattro All-Wheel Drive'
+                },
+                features: [
+                    'MMI Touch Response',
+                    'Virtual Cockpit Plus',
+                    'Head-Up Display',
+                    'Contour Ambient Lighting',
+                    'Panoramic Sunroof',
+                    'Bang & Olufsen Sound System',
+                    'Wireless Charging',
+                    'Adaptive Cruise Assist',
+                    'Top View Camera',
+                    'Exit Warning System'
+                ],
+                price: '$55,800'
+            }
+        };
+
+        // Get modal element
+        const modal = document.getElementById('vehicleModal');
+        const vehicleDetails = document.getElementById('vehicleDetails');
+        const closeModal = document.querySelector('.close-modal');
+        const viewDetailsButtons = document.querySelectorAll('.view-details');
+
+        // Function to open modal with vehicle details
+        function openVehicleDetails(vehicleId) {
+            const vehicle = vehicleData[vehicleId];
+            if (!vehicle) return;
+
+            // Create HTML for vehicle details
+            let specsHTML = '';
+            for (const [key, value] of Object.entries(vehicle.specs)) {
+                specsHTML += `
+                    <div class="spec-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>${key}:</strong> ${value}</span>
+                    </div>
+                `;
+            }
+
+            let featuresHTML = '';
+            vehicle.features.forEach(feature => {
+                featuresHTML += `<li><i class="fas fa-check"></i> ${feature}</li>`;
+            });
+
+            vehicleDetails.innerHTML = `
+                <div class="vehicle-detail-image">
+                    <img src="${vehicle.image}" alt="${vehicle.name}">
+                </div>
+                <div class="vehicle-detail-info">
+                    <h2>${vehicle.name}</h2>
+                    <p>${vehicle.description}</p>
+                    
+                    <div class="vehicle-specs-detail">
+                        <h3>Specifications</h3>
+                        <div class="specs-grid">
+                            ${specsHTML}
+                        </div>
+                    </div>
+                    
+                    <div class="vehicle-features">
+                        <h3>Key Features</h3>
+                        <ul class="features-list">
+                            ${featuresHTML}
+                        </ul>
+                    </div>
+                    
+                    <div class="vehicle-price">
+                        <div class="price-tag">Starting at ${vehicle.price}</div>
+                        <div class="detail-cta">
+                            <a href="#" class="cta-button primary">Schedule Test Drive</a>
+                            <a href="#" class="cta-button secondary">Download Brochure</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close modal
+        function closeVehicleModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Add event listeners to view details buttons
+        viewDetailsButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const vehicleId = button.getAttribute('data-vehicle');
+                openVehicleDetails(vehicleId);
+            });
+        });
+
+        // Close modal when clicking on the close button
+        closeModal.addEventListener('click', closeVehicleModal);
+
+        // Close modal when clicking outside of the modal content
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeVehicleModal();
+            }
+        });
+
+        // Close modal when pressing the Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                closeVehicleModal();
+            }
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.category-card, .vehicle-card, .feature, .capability, .metric, .service-card, .step, .contact-card, .value, .team-member, .mv-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
